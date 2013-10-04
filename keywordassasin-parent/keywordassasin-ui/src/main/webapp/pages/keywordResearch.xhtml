@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="templates/template.xhtml">
+	<ui:define name="main-body">
+		<!-- p:panelGrid id="keywordReaserchFileUpload" columns="1"
+			style="font-size: 12px; border-width: 0px;"-->
+			<f:facet name="header">Keyword and Other Parameter Specification</f:facet>
+			<!-- <p:outputLabel for="fileUploadControl" value="Choose File"></p:outputLabel > -->
+
+			<p:menubar autoDisplay="false" style="font-size: 12px">
+				<p:submenu label="Actions" icon="ui-icon-gear">
+					<p:menuitem value="Start" url="#" icon="ui-icon-refresh" />
+					<p:menuitem value="Stop" url="#" icon="ui-icon-close" />
+				</p:submenu>
+				<p:menuitem value="FAQ" url="http://www.primefaces.org"
+					icon="ui-icon-help" />
+			</p:menubar>
+			<h:form enctype="multipart/form-data">
+				<p:fileUpload
+					fileUploadListener="#{fileUploadController.handleFileUpload}"
+					mode="advanced" update="messages,keywordTable,start,pause,resume,stop" auto="true" label="Upload"
+					sizeLimit="1000000" allowTypes="/(\.|\/)(txt|csv)$/" style="width: 100px; font-size: 12px"/>
+				<p:growl id="messages" showDetail="true" />
+				<p:separator id="separator" />
+				<p:commandButton value="Refresh Table" id="refresh" process="@this"
+					update="keywordTable" actionListener="#{statusBean.poll}" />
+				<p:commandButton value="Start" id="start" process="@this" onsuccess="poll.start()"
+					update="keywordTable,start,pause,resume,stop,poller" actionListener="#{activityController.start}" disabled="#{activityController.startState}"/>
+				<p:commandButton value="Pause" id="pause" process="@this" onsuccess="poll.stop()"
+					update="keywordTable,start,pause,resume,stop,poller" actionListener="#{activityController.pause}" disabled="#{activityController.pauseState}"/>
+				<p:commandButton value="Resume" id="resume" process="@this" onsuccess="poll.start()"
+					update="keywordTable,start,pause,resume,stop,poller" actionListener="#{activityController.resume}" disabled="#{activityController.resumeState}"/>
+				<p:commandButton value="Stop" id="stop" process="@this" onsuccess="poll.stop()"
+					update="keywordTable,start,pause,resume,stop,poller" actionListener="#{activityController.stop}" disabled="#{activityController.stopState}"/>
+				<p:poll id="poller" interval="3" widgetVar="poll" autoStart="false" stop="#{activityController.pollStop}"
+					listener="#{statusBean.poll}" update="keywordTable,start,pause,resume,stop" />	
+				<p:dataTable id="keywordTable" var="model" value="#{statusBean.models}" style="font-size: 10px;" scrollable="true" scrollHeight="200" resizableColumns="true">					
+					<p:column headerText="Keyword">
+						<h:outputText value="#{model.keyword}" />
+					</p:column>
+
+					<p:column headerText="CPC($)">
+						<h:outputText value="#{model.cpc}" />
+					</p:column>
+					
+					<p:column headerText="Comp. Pages">
+						<h:outputText value="#{model.totalNumberOfCompetitivePages}" />
+					</p:column>
+					
+					<p:column headerText="Real Comp. Pages">
+						<h:outputText value="#{model.realNumberOfCompetitivePages}" />
+					</p:column>
+
+					<!-- <p:column headerText="Competition">
+						<h:outputText value="#{model.adwordCompetition}" />
+					</p:column> -->
+
+					<p:column headerText="CP Strength">
+						<h:outputText value="#{model.competitivePageStrength}" />
+					</p:column>
+
+					<p:column headerText="Avg. PR">
+						<h:outputText value="#{model.averagePageRank}" />
+					</p:column>
+
+					<p:column headerText="PR Strength">
+						<h:outputText value="#{model.pageRankStrentgh}" />
+					</p:column>
+					
+					<p:column headerText="Competition">
+						<h:outputText value="#{model.competitionStrength}" />
+					</p:column>					
+
+					<p:column headerText="Commercial Intent">
+						<h:outputText value="#{model.commercialIntent}" />
+					</p:column>
+
+					<p:column headerText="Ads Count">
+						<h:outputText value="#{model.adsCount}" />
+					</p:column>
+
+					<p:column headerText="Keyword rating">
+						<h:outputText value="#{model.keywordRating}" />
+					</p:column>
+				</p:dataTable>
+			
+			</h:form>
+		<!-- </p:panelGrid> -->
+	</ui:define>
+</ui:composition>

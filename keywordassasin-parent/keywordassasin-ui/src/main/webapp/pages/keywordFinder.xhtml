@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="templates/template.xhtml">
+	<ui:define name="main-body">
+		<p:panelGrid id="keywordFinderDisplay" columns="2" style="font-size: 1em;">
+			<f:facet name="header">Keyword and Other Parameter Specification</f:facet>
+			<p:outputLabel for="seedWord" value="Seed Keyword"></p:outputLabel>
+			<p:inputText id="seedWord"
+				value="#{keywordController.seedWord}"></p:inputText>
+
+			<p:outputLabel for="cpcUpperLimit" value="CPC Upper Limit"></p:outputLabel>
+			<p:inputText id="cpcUpperLimit"
+				value="#{keywordController.cpcUpperLimit}"></p:inputText>
+
+			<p:outputLabel for="miningType" value="Mining Type"></p:outputLabel>
+			<p:inputText id="miningType"
+				value="#{keywordController.miningType}"></p:inputText>
+
+			<p:outputLabel for="location" value="Location"></p:outputLabel>
+			<p:inputText id="location"
+				value="#{keywordController.location}"></p:inputText>
+		</p:panelGrid>
+		<p:commandButton value="Start Digging" actionListener="#{keywordController.startDigging}" style="height : 30px; margin-top: 10px"></p:commandButton>
+		<p:separator id="separator"/>
+		
+	</ui:define>
+</ui:composition>

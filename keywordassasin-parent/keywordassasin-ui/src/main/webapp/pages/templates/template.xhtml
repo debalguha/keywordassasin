@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+	<style type="text/css">
+.ui-widget {
+	font-size: 1em;
+}
+</style>
+</h:head>
+
+
+<h:body style="margin-right:100px; margin-left:100px;">
+	<p:layout style="height : 100%;">
+		<p:layoutUnit position="north" size="150" resizable="false"
+			closable="false" collapsible="false" style="border:none;">
+			<h:graphicImage url="/images/banner-01.jpg" height="100%"
+				width="100%"></h:graphicImage>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" size="420" style="height: 400px;">
+			<p:layout style="border-width:0px;">
+				<p:layoutUnit position="west" header="Available Services"
+					maxSize="1000" closable="false" collapsible="false"
+					style="margin-top:50px;font-size: 12px;">
+
+					<p:menu style="width:180px">
+						<p:submenu label="Adwords">
+							<p:menuitem value="Keyword Finder" url="/pages/keywordFinder.jsf"
+								style="font-size: 1em;" />
+							<p:menuitem value="Keyword Research"
+								url="/pages/keywordResearch.jsf" style="font-size: 1em;" />
+						</p:submenu>
+					</p:menu>
+				</p:layoutUnit>
+				<p:layoutUnit position="center" style="border:none;margin-top:50px;font-size: 12px;" resizable="false"
+					closable="false" collapsible="false">
+					<ui:insert name="main-body">
+					</ui:insert>
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

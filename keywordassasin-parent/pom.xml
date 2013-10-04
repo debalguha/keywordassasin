@@ -107,5 +107,6 @@
 		<module>keywordassasin-ui</module>
 		<module>keywordassasin-reg-core</module>
 		<module>keywordassasin-reg-ui</module>
+		<module>keywordassas-ui-core</module>
 	</modules>
 </project>

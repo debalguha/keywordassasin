@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+	<style type="text/css">
+.ui-widget {
+	font-size: 1em;
+}
+</style>
+</h:head>
+
+
+<h:body style="margin-right:20px; margin-left:20px;height:100%;">
+	<p:layout style="height : 100%;">
+		<p:layoutUnit position="north" size="150" resizable="false"
+			closable="false" collapsible="false" style="border:none;">
+			<h:graphicImage url="/images/keyword_assassin.jpg" height="100%"
+				width="100%"></h:graphicImage>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<p:layout style="border-width:0px;">
+
+				<p:layoutUnit position="north"
+					size="150" closable="false" collapsible="false"
+					style="margin-top:50px;font-size: 12px;">
+					<p:layout style="border-width:0px;">
+						<p:layoutUnit position="west" closable="false" size="400"
+							collapsible="false" style="font-size: 12px;">
+							<h:form id="uploadForm" enctype="multipart/form-data">
+								<p:fileUpload
+									fileUploadListener="#{fileUploadController.handleFileUpload}"
+									multiple="false" mode="advanced"
+									update="messages,:keywordForm:keywordTable,:keywordForm:start,:keywordForm:pause,:keywordForm:resume,:keywordForm:stop"
+									label="Choose" sizeLimit="1000000"
+									allowTypes="/(\.|\/)(txt|csv)$/" style="font-size: 12px" />
+								<p:dialog modal="true" widgetVar="statusDialog" header="Status"
+									draggable="false" closable="false" resizable="false">
+									<p:graphicImage value="/images/ajaxloadingbar.gif" />
+								</p:dialog>
+								<p:commandButton id="downloadLink" value="Download" ajax="false"
+									onclick="PrimeFaces.monitorDownload(start, stop)"
+									icon="ui-icon-arrowthick-1-s">
+									<p:fileDownload value="#{fileUploadController.file}" />
+								</p:commandButton>
+								<p:growl id="messages" showDetail="true" />
+							</h:form>
+<script  type="text/javascript">
+	function start() {
+		statusDialog.show();
+	}
+
+	function stop() {
+		statusDialog.hide();
+	}
+</script>							
+						</p:layoutUnit>
+						<p:layoutUnit position="center" closable="false"
+							collapsible="false" style="font-size: 10px;">
+							<p:panelGrid columns="5">
+								<p:outputPanel>
+									1. Go to google keyword table, make a search on desired phrase and export the result in CSV format.
+								</p:outputPanel>
+								<p:outputPanel>
+									2. Press the choose button and locate your CSV file. Use the upload button to upload it to server.
+								</p:outputPanel>
+								<p:outputPanel>
+									3. Press the start button to start analyzing. You can pause and resume the analysis. The analysis dynamically updates a bar chart, showing the distribution of the keywords accross different rating categories.
+								</p:outputPanel>
+								<p:outputPanel>
+									4. Use the download button at any time during analysis to download the result.
+								</p:outputPanel>
+								<p:outputPanel>
+									Few Tips:
+										1. Use maximum 100 keywords in one anaysis cycle.
+										2. Make sure the downloaded file from google is comma seperated.
+										3. Make sure you have these 3 columns in CSV file; keyword, CPC, global monthly searches
+								</p:outputPanel>
+							</p:panelGrid>
+						</p:layoutUnit>
+					</p:layout>
+				</p:layoutUnit>
+				<p:layoutUnit position="center" closable="false" collapsible="false"
+					style="margin-top:50px;font-size: 12px;" size="400">
+					<p:layout style="border-width:0px;">
+						<!-- <p:layoutUnit position="south" size="300" closable="false"
+							collapsible="false" style="font-size: 12px;">
+
+						</p:layoutUnit> -->
+						<p:layoutUnit position="center" closable="false"
+							collapsible="false" style="font-size: 12px;" size="300">
+							<h:form id="chartForm">
+									<p:barChart id="basic" value="#{chartController.categoryModel}" legendPosition="ne" 
+											animate="true" style="width:400px;height:300px;font-size: 10px; font-color: white; font-weight: bold"
+									 		title="Rating Distribution" min="0" max="50" xaxisLabel="Ratings" yaxisLabel="Count" orientation="horizontal">
+										<p:ajax event="itemSelect" listener="#{chartController.itemSelect}" update=":uploadForm:messages" />
+									</p:barChart>							         
+            				</h:form>							
+							<h:form id="keywordForm">
+								<p:commandButton value="Refresh Table" id="refresh"
+									process="@this" update="keywordTable"
+									actionListener="#{statusBean.poll}" />
+								<p:commandButton value="Start" id="start" process="@this"
+									onsuccess="poll.start()"
+									update="keywordTable,start,pause,resume,stop,poller"
+									actionListener="#{activityController.start}"
+									disabled="#{activityController.startState}" />
+								<p:commandButton value="Pause" id="pause" process="@this"
+									onsuccess="poll.stop()"
+									update="keywordTable,start,pause,resume,stop,poller"
+									actionListener="#{activityController.pause}"
+									disabled="#{activityController.pauseState}" />
+								<p:commandButton value="Resume" id="resume" process="@this"
+									onsuccess="poll.start()"
+									update="keywordTable,start,pause,resume,stop,poller"
+									actionListener="#{activityController.resume}"
+									disabled="#{activityController.resumeState}" />
+								<p:commandButton value="Stop" id="stop" process="@this"
+									onsuccess="poll.stop()"
+									update="keywordTable,start,pause,resume,stop,poller"
+									actionListener="#{activityController.stop}"
+									disabled="#{activityController.stopState}" />
+								<p:poll id="poller" interval="3" widgetVar="poll" process="@this"
+									autoStart="false" stop="#{activityController.pollStop}"
+									listener="#{statusBean.poll}"
+									update="keywordTable,start,pause,resume,stop,:chartForm:basic" />
+								<p:separator id="separator" />
+								<p:dataTable id="keywordTable" var="model"       
+									value="#{statusBean.models}" style="font-size: 10px;"
+									scrollable="true" scrollHeight="300" resizableColumns="true" sortBy="">
+									<p:column headerText="Keyword" sortBy="#{model.keyword}">
+										<h:outputText value="#{model.keyword}" />
+									</p:column>
+
+									<p:column headerText="CPC($)" sortBy="#{model.cpc}">
+										<h:outputText value="#{model.cpc}" />
+									</p:column>
+
+									<p:column headerText="Comp. Pages" sortBy="#{model.totalNumberOfCompetitivePages}">
+										<h:outputText value="#{model.totalNumberOfCompetitivePages}" />
+									</p:column>
+
+									<p:column headerText="Real Comp. Pages" sortBy="#{model.realNumberOfCompetitivePages}">
+										<h:outputText value="#{model.realNumberOfCompetitivePages}" />
+									</p:column>
+
+									<!-- <p:column headerText="Competition">
+										<h:outputText value="#{model.adwordCompetition}" />
+									</p:column> -->
+
+									<p:column headerText="CP Strength" sortBy="#{model.competitivePageStrength}">
+										<h:outputText value="#{model.competitivePageStrength}" />
+									</p:column>
+
+									<p:column headerText="Avg. PR" sortBy="#{model.averagePageRank}">
+										<h:outputText value="#{model.averagePageRank}" />
+									</p:column>
+
+									<p:column headerText="PR Strength" sortBy="#{model.pageRankStrentgh}">
+										<h:outputText value="#{model.pageRankStrentgh}" />
+									</p:column>
+
+									<p:column headerText="Competition" sortBy="#{model.competitionStrength}">
+										<h:outputText value="#{model.competitionStrength}" />
+									</p:column>
+
+									<p:column headerText="Commercial Intent" sortBy="#{model.commercialIntent}">
+										<h:outputText value="#{model.commercialIntent}" />
+									</p:column>
+
+									<p:column headerText="Ads Count" sortBy="#{model.adsCount}">
+										<h:outputText value="#{model.adsCount}" />
+									</p:column>
+
+									<p:column headerText="Keyword rating" sortBy="#{model.keywordRating}">
+										<h:outputText value="#{model.keywordRating}" />
+									</p:column>
+								</p:dataTable>
+							</h:form>
+						</p:layoutUnit>
+					</p:layout>
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

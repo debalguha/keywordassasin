@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>	
+	<var-def name="webpage">
+		<html-to-xml>
+			<http url="https://www.google.com/search?q=Dog training books"></http>
+		</html-to-xml>
+	</var-def>
+	<var-def name="link">
+		<xpath expression="count(//div[@id='rhs_block']//li)">
+			<var name="webpage"/>
+		</xpath>
+	</var-def>
+</config>

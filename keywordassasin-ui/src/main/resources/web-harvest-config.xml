@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+	<var-def name="webpage1">
+		<html-to-xml>
+			<http url="https://www.google.co.in/search?q=#KEYWORD"></http>
+		</html-to-xml>
+	</var-def>
+	<var-def name="links">
+		<xpath expression="(//h3[@class='r'])//a/@href">
+			<var name="webpage1"/>
+		</xpath>
+	</var-def>
+	<var-def name="webpage4">
+		<html-to-xml>
+			<http url='https://www.google.co.in/search?q="#KEYWORD"'></http>
+		</html-to-xml>
+	</var-def>	
+	<var-def name="totalCompPages">
+		<xpath expression="//div[@id='resultStats']/text()">
+			<var name="webpage4"/>
+		</xpath>
+	</var-def>		
+	<var-def name="webpage2">
+		<html-to-xml>
+			<http url="https://www.google.com/search?q=#KEYWORD"></http>
+		</html-to-xml>
+	</var-def>
+	<var-def name="adCount">
+		<xpath expression="count(//div[@id='rhs_block']//li)">
+			<var name="webpage2"/>
+		</xpath>
+	</var-def>	
+	<var-def name="webpage3">
+		<html-to-xml>
+			<http method="get" url="https://www.google.co.in/search?hl=en&amp;as_epq=#KEYWORD&amp;lr=lang_en&amp;as_qdr=m&amp;as_occt=title&amp;safe=images&amp;tbs=lr:lang_1en,rl:1,rls:0">
+			</http>		
+		</html-to-xml>
+	</var-def>
+	<var-def name="realCompPages">
+		<xpath expression="//div[@id='resultStats']/text()">
+			<var name="webpage3"/>
+		</xpath>
+	</var-def>
+</config>

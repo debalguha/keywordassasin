@@ -1,0 +1,45 @@
+How Does SKCA Works?
+The major downside of the free Google Adwords tool is that it does not provide you with enough information about the competition. It does give you a little adwords competition bar, but you need to manually go into Google for every keyword that you are interested in and do lots of different checks to find out how competitive that keyword is. If you are deciding between 20 different keywords this could easily take you over an hour or more if you are being thorough... This is where Stealth Keyword Competition Analyzer does it job and allows you to gather all this information you need to analyse the best keywords base upon the competition and does this automatically.
+
+The SKCA base on the real competing search results and Google page rank to calculate the competition, read the Cutting Edge Keyword Research ebook for more information but the fact is that it SKCA shows competition in 3 different ways – real competing pages, Google page rank and true competition. This means that you are covering all bases when you pick that all important keyword for your website.
+
+Here the SKCA v2.2.4 basic formula in the columns of the keyword results as included:
+Keyword :: Google word or phrase keywords
+Searches Month :: Google monthly or local Searches results
+CPC :: Google Approximate Cost Per Click
+Comp Pages :: The number of competing pages when you type your keyword in quotes in to Google search
+REAL Comp Pages :: Base on Google real number of competing search pages (Read CEKR ebook about &start=990)
+CP Strength :: Compare the results from "REAL Competing Pages" (Best value between 0 to 400)
+Average PR :: "Average page rank" of the top ten sites of Google (Read CEKR ebook on page 12)
+PR Strength :: Compare the results from "Average Page Rank" (Best value between 0 to 4)
+Competition :: Compare the value of "Competing Strength" + "Page Rank Strength"
+Commercial :: Compare the value of "REAL Competing Pages" + "Average Page Rank"
+Ads Count :: The number of Ads showing up on the first page of Google
+Keyword Rating :: Compare the value of "Competition" + "Commercial"
+
+Keyword Rating Amazing :: "Very Low" + "Yes"
+Keyword Rating Great :: "Low" + "Yes"
+Keyword Rating Good :: "Moderate" + "Yes or No"
+Keyword Rating Bad :: "High" + "No"
+Keyword Rating Terrible :: "Very High" + "No"
+
+So basically the SKCA formula goes something like this: "CP Strength" + "PR Strength" = "Competition" + "Commercial" = "Keyword Rating"
+
+You should keep in mind is that the rating for the keyword does not seem to take into account the number of searches per month, it only considers the competition. So SKCA could tell you that it has an “Amazing” keyword even though it only gets 100 searches per month but this is easy enough to use some common sense to decide whether or not the keyword is something that you want to use based on the search volume.
+Quote:
+Global search volume refers to the total amount of searches for a particular keyword in all Google properties worldwide over the last 12 month. That means Google.co.uk for UK, as well as Google search engines targeted at different countries, such as Google.com.au for Australia and Google.com for the America. It also includes searches made through other Google sources, including some search applications and toolbar search boxes.
+
+Local search volume means the total searches made in your country's local Google engine for the past 12 month and in your chosen language settings. So, for most UK that means results from Google.co.uk. You can change your localized results through the AdWords software, via the "Advanced options" settings. Local search volume helps you assess how popular a term is to your chosen market. In theory it provides you with more relevant data, as global searches may skew the search volume.
+
+So many people have there own technique on deciding the keyword based on the search volume, its hard to tell from which is right or wrong way but there plenty of free tutorials on the internet to help you decide which is best for your niche market. Anyway for me personally I tend to keep search volume around a average value between the range of 1000 to 100000 and maybe divided by 12 to get average idea of the monthly searches. So that search volume is not to low of course where hardly anyone uses that particular keyword but not to ridiculous high over used keywords and tougher competition.
+
+1. This is how I do it by choosing adwords match type to "Exact" and tick "Only show ideas closely related to my search terms" box then scroll down the page to "Show rows" and change it to 100, now going to "Advanced Options and Filters" and in "Filter Ideas" select Global Monthly Searches >= 1000 and click on "Add Another" then Global Monthly Searches <= 100000 or sometime add another filter for low competition. Once I'm done with the Google results then I tick "keyword ideas" box and download 100 keywords into cvs file and use the SKCA for the final results.
+
+2. Or here another method sometime use for multiple keyword research. I keep the match type to "Broad" enter keyword, let say 'weight loss' and click search then click Global Monthly Searches once to sort out from the highest to lowest figures and check to see the "Show rows" is at 100, now tick the top "keyword ideas" box and download 100 keywords into cvs file then I use Microsoft Excel to copy all 100 keywords and paste it back in to Google adwords "Word or phrase" box and then I do the similar task as follows in section 1 above.
+
+3. Now lets test your niche keyword competition against the advertisers that has already paying and advertising on the keyword. First of all you select the your very best niche keyword from SKCA (e.g. Amazing KR) with the global searches volume between, let say 1000 to 100000 and the next step is to go to Google search engine and type in your niche keyword and what you want to do, is find advertisers who are advertising your related product that closely match your niche keyword and the reason for this is just by looking at the advertising for that particular keyword you should be able to work out exactly what people are searching for when they type in there keyword are likely to buy from the advertiser because those advertisers has done the work of trying to make money from that keyword and already have there advert online and has now started generating sales and the ones who still running on first page of Google have found they are make money from there keywords and selling their products.
+
+So basically you go to Google and put a keyword in and you see lot of advertisers promoting the product that matches your similar niche the chances are advertisers has put there money on that particular keyword to promote there product. Also remember to keep a lookout on your keywords in the Google search result and the fewer competing search pages the lower competition. But don't always use the exact same adwords method for all keywords every time and change it a little to come up with different search results and you may find hidden higher quality keywords to use in your campaign that most advertisers are not using. Just one more thing to mention checkout the whole layout of advertisers website and give you some ideas in the number of ways to improve your advertising website and work out what makes there website sell more products.
+
+In the video tutorial he mention using private Level 1 proxies will analyser little bit faster,
+so I copied these proxies from the video and all you need to do is add them to your SKCA.

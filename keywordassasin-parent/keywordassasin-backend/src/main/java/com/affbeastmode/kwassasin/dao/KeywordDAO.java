@@ -112,7 +112,7 @@ public class KeywordDAO {
 
 	public int totalKeywordsProcessedInCurrentSubscription(User user, Plan plan) {
 		UserSubscription subscription = user.getSubscriptions().iterator().next();
-		Query query = sessionFactory.getCurrentSession().createSQLQuery("select sum(keywordProcessed) from user_activity where user_id=" + user.getID() + " and plan_id=" + plan.getID() + " and activityDate between " + subscription.getPlanStartDate() + " and " + subscription.getPlanEndDate());
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("select ifnull(sum(keywordProcessed),0) from user_activity where user_id=" + user.getID() + " and plan_id=" + plan.getID() + " and activityDate between '" + subscription.getPlanStartDate() + "' and '" + subscription.getPlanEndDate()+"'");
 		return Integer.parseInt(query.uniqueResult().toString());
 	}
 

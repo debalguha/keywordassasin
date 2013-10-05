@@ -1,7 +1,7 @@
 package com.paypal.api.payments;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,9 +52,16 @@ public class IPNProcessorTask implements Runnable{
 					logger.info("txn_id: "+ipnInfo.getTxnId());
 					logger.info("payment_status: "+ipnInfo.getPaymentStatus());
 					UserSubscription subscription = new UserSubscription();
-					subscription.setCreationDate(new Date());
+					Calendar currentDate = Calendar.getInstance();
+					subscription.setCreationDate(currentDate.getTime());
+					subscription.setPlanStartDate(currentDate.getTime());
+					Calendar planEndDate = Calendar.getInstance();
+					planEndDate.setTime(currentDate.getTime());
+					planEndDate.add(Calendar.DAY_OF_YEAR, chosenPlan.getDurationInDays());
 					subscription.setPlan(chosenPlan);
-					subscription.setActive(false);
+					subscription.setPlanEndDate(planEndDate.getTime());
+					subscription.setActive(true);
+					
 					UserTransaction transaction  = new UserTransaction();
 					transaction.setAmountReceived(new BigDecimal(ipnInfo.getPaymentAmount()));
 					transaction.setPaymentFee(new BigDecimal(ipnInfo.getPaymentFee()));

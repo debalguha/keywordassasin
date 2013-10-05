@@ -104,9 +104,8 @@
 	</build>  
 	<modules>
 		<module>keywordassasin-backend</module>
-		<module>keywordassasin-ui</module>
 		<module>keywordassasin-reg-core</module>
 		<module>keywordassasin-reg-ui</module>
-		<module>keywordassas-ui-core</module>
+		<module>keywordassasin-web</module>
 	</modules>
 </project>

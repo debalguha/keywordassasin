@@ -72,6 +72,7 @@ public class RegistrationController {
 		return status;
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/confirm.do", method = RequestMethod.POST)
 	public void doConfirmRegistration(@RequestParam(required = true, value = "uuid")final String uuid, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("IPN received");

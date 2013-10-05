@@ -21,6 +21,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>keywordassasin-reg-ui</finalName>
+		<finalName>registration</finalName>
 	</build>
 </project>

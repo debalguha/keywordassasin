@@ -14,8 +14,39 @@
 	<script type="text/javascript">
 		<c:set var="req" value="${pageContext.request}" />
 		<c:set var="baseURL" value="${req.scheme}://${req.serverName}:${req.serverPort}/" />
+		function validate(){
+			var email = $('#txtEmail').val();
+			var password = $('#password').val();
+			var passwordConfirm = $('#password_confirm').val();
+		    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+		    if (!filter.test(email) || $.trim(email).length == 0) {
+			    alert('Please provide a valid email address');
+			    return false;
+		    }
+		    
+		    if(password!=passwordConfirm){
+		    	alert('Passwords does not match!!');
+		    	return false;
+		    }
+		    return true;
+		}		
 		$(document).ready(function(){
 			$('#regSubmit').click(function(event){
+				var email = $('#txtEmail').val();
+				var password = $('#password').val();
+				var passwordConfirm = $('#password_confirm').val();
+			    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+			    if (!filter.test(email) || $.trim(email).length == 0) {
+				    alert('Please provide a valid email address');
+				    return false;
+			    }
+			    
+			    if(password!=passwordConfirm){
+			    	alert('Passwords do not match!!');
+			    	return false;
+			    }
 				$.ajax({
 					url : '/registration/controller/register.do',
 					data : $('#regForm').serialize(),
@@ -71,6 +102,7 @@
 		<span for="tab-1" class="tab-label-1">Registration</span>
 		<div class="clear-shadow"></div>
 		<div id="content">
+			<div class="error"></div>
 			<div class="content-1">
 				<form id="regForm" action="" autocomplete="on">
 				  <p>
@@ -83,7 +115,7 @@
 				  </p>
 				  <p>
 					<label for="passwordsignup_confirm" class="youpasswd">Please confirm your password </label>
-					<input class="field" name="passwordsignup_confirm" required="required" type="password" placeholder="mypassword"/>
+					<input class="field" name="password_confirm" required="required" type="password" placeholder="mypassword"/>
 				  </p>
 				  <p>
 					<label for="gender" class="youpasswd">Your Timezone</label>

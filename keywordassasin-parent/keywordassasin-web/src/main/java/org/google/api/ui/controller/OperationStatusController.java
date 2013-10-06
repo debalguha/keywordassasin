@@ -45,7 +45,7 @@ public class OperationStatusController extends UIBaseControllerBean {
 			List<ModelObject> sortedModels = new ArrayList<ModelObject>(models.size());
 			sortedModels.addAll(models);			
 			Collections.sort(sortedModels);
-			modelsToOutput.addAll(models);
+			modelsToOutput.addAll(sortedModels);
 		}else
 			logger.info("No models found!!");
 		logger.info("Sending back "+modelsToOutput.size()+" transformed objects working with "+(models==null?0:models.size())+" core objects.");

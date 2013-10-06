@@ -39,6 +39,8 @@ public class RegistrationController {
 	private Map<String, String> uuIDUserIdMap;
 	@Value("${confirmation.url}")
 	private String confirmationURL;
+	@Value("${login.url}")
+	private String loginURL;	
 	@Autowired
 	private IPNHandler handler;
 
@@ -98,6 +100,21 @@ public class RegistrationController {
 		return ;
 	}
 	
+	@RequestMapping(value = "/forgetPassword.do", method = RequestMethod.GET)
+	public void doPasswordReset(@RequestParam(required = true, value = "emailsignup")final String emailsignup, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("Forget Password request received.");
+		User user=null;
+		try {
+			user = keywordService.findUserByUserId(emailsignup);
+		} catch (Exception e) {
+			logger.error("Unable to retrieve user with email: "+emailsignup, e);
+			request.setAttribute("errMsg", "Unable to retrieve user with email: "+emailsignup);
+			return;
+		}
+		mailService.sendMailTo(user, "Your password is "+user.getPassword()+". If you still have difficulty logging in please contact support. The support email is kwassasin-support@gmail.com");
+		request.getSession().invalidate();
+		response.sendRedirect(loginURL);
+	}		
 	
 	public void setKeywordService(KeywordService keywordService) {
 		this.keywordService = keywordService;
@@ -121,6 +138,10 @@ public class RegistrationController {
 
 	public void setHandler(IPNHandler handler) {
 		this.handler = handler;
+	}
+
+	public void setLoginURL(String loginURL) {
+		this.loginURL = loginURL;
 	}
 
 }

@@ -232,6 +232,10 @@ margin: 0 0 10px;
     color: #039BFC;
     font-size: 14px;
 }
+.error{
+    color: red;
+    font-size: 14px;
+}
 .keeplogin{
     color: #039BFC;
     font-size: 14px;

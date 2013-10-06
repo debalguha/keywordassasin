@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 
 	<style type="text/css">
@@ -27,9 +26,8 @@
 		<p:layoutUnit position="center">
 			<p:layout style="border-width:0px;">
 
-				<p:layoutUnit position="north"
-					size="150" closable="false" collapsible="false"
-					style="margin-top:50px;font-size: 12px;">
+				<p:layoutUnit position="north" size="150" closable="false"
+					collapsible="false" style="margin-top:50px;font-size: 12px;">
 					<p:layout style="border-width:0px;">
 						<p:layoutUnit position="west" closable="false" size="400"
 							collapsible="false" style="font-size: 12px;">
@@ -51,15 +49,15 @@
 								</p:commandButton>
 								<p:growl id="messages" showDetail="true" />
 							</h:form>
-<script  type="text/javascript">
-	function start() {
-		statusDialog.show();
-	}
+							<script type="text/javascript">
+								function start() {
+									statusDialog.show();
+								}
 
-	function stop() {
-		statusDialog.hide();
-	}
-</script>							
+								function stop() {
+									statusDialog.hide();
+								}
+							</script>
 						</p:layoutUnit>
 						<p:layoutUnit position="center" closable="false"
 							collapsible="false" style="font-size: 10px;">
@@ -89,103 +87,134 @@
 				<p:layoutUnit position="center" closable="false" collapsible="false"
 					style="margin-top:50px;font-size: 12px;" size="400">
 					<p:layout style="border-width:0px;">
-						<!-- <p:layoutUnit position="south" size="300" closable="false"
-							collapsible="false" style="font-size: 12px;">
-
-						</p:layoutUnit> -->
 						<p:layoutUnit position="center" closable="false"
-							collapsible="false" style="font-size: 12px;" size="300">
-							<h:form id="chartForm">
-									<p:barChart id="basic" value="#{chartController.categoryModel}" legendPosition="ne" 
-											animate="true" style="width:400px;height:300px;font-size: 10px; font-color: white; font-weight: bold"
-									 		title="Rating Distribution" min="0" max="50" xaxisLabel="Ratings" yaxisLabel="Count" orientation="horizontal">
-										<p:ajax event="itemSelect" listener="#{chartController.itemSelect}" update=":uploadForm:messages" />
-									</p:barChart>							         
-            				</h:form>							
-							<h:form id="keywordForm">
-								<p:commandButton value="Refresh Table" id="refresh"
-									process="@this" update="keywordTable"
-									actionListener="#{statusBean.poll}" />
-								<p:commandButton value="Start" id="start" process="@this"
-									onsuccess="poll.start()"
-									update="keywordTable,start,pause,resume,stop,poller"
-									actionListener="#{activityController.start}"
-									disabled="#{activityController.startState}" />
-								<p:commandButton value="Pause" id="pause" process="@this"
-									onsuccess="poll.stop()"
-									update="keywordTable,start,pause,resume,stop,poller"
-									actionListener="#{activityController.pause}"
-									disabled="#{activityController.pauseState}" />
-								<p:commandButton value="Resume" id="resume" process="@this"
-									onsuccess="poll.start()"
-									update="keywordTable,start,pause,resume,stop,poller"
-									actionListener="#{activityController.resume}"
-									disabled="#{activityController.resumeState}" />
-								<p:commandButton value="Stop" id="stop" process="@this"
-									onsuccess="poll.stop()"
-									update="keywordTable,start,pause,resume,stop,poller"
-									actionListener="#{activityController.stop}"
-									disabled="#{activityController.stopState}" />
-								<p:poll id="poller" interval="3" widgetVar="poll" process="@this"
-									autoStart="false" stop="#{activityController.pollStop}"
-									listener="#{statusBean.poll}"
-									update="keywordTable,start,pause,resume,stop,:chartForm:basic" />
-								<p:separator id="separator" />
-								<p:dataTable id="keywordTable" var="model"       
-									value="#{statusBean.models}" style="font-size: 10px;"
-									scrollable="true" scrollHeight="300" resizableColumns="true" sortBy="">
-									<p:column headerText="Keyword" sortBy="#{model.keyword}">
-										<h:outputText value="#{model.keyword}" />
-									</p:column>
-
-									<p:column headerText="CPC($)" sortBy="#{model.cpc}">
-										<h:outputText value="#{model.cpc}" />
-									</p:column>
-
-									<p:column headerText="Comp. Pages" sortBy="#{model.totalNumberOfCompetitivePages}">
-										<h:outputText value="#{model.totalNumberOfCompetitivePages}" />
-									</p:column>
-
-									<p:column headerText="Real Comp. Pages" sortBy="#{model.realNumberOfCompetitivePages}">
-										<h:outputText value="#{model.realNumberOfCompetitivePages}" />
-									</p:column>
-
-									<!-- <p:column headerText="Competition">
-										<h:outputText value="#{model.adwordCompetition}" />
-									</p:column> -->
-
-									<p:column headerText="CP Strength" sortBy="#{model.competitivePageStrength}">
-										<h:outputText value="#{model.competitivePageStrength}" />
-									</p:column>
-
-									<p:column headerText="Avg. PR" sortBy="#{model.averagePageRank}">
-										<h:outputText value="#{model.averagePageRank}" />
-									</p:column>
-
-									<p:column headerText="PR Strength" sortBy="#{model.pageRankStrentgh}">
-										<h:outputText value="#{model.pageRankStrentgh}" />
-									</p:column>
-
-									<p:column headerText="Competition" sortBy="#{model.competitionStrength}">
-										<h:outputText value="#{model.competitionStrength}" />
-									</p:column>
-
-									<p:column headerText="Commercial Intent" sortBy="#{model.commercialIntent}">
-										<h:outputText value="#{model.commercialIntent}" />
-									</p:column>
-
-									<p:column headerText="Ads Count" sortBy="#{model.adsCount}">
-										<h:outputText value="#{model.adsCount}" />
-									</p:column>
-
-									<p:column headerText="Keyword rating" sortBy="#{model.keywordRating}">
-										<h:outputText value="#{model.keywordRating}" />
-									</p:column>
-								</p:dataTable>
-							</h:form>
+							collapsible="false" style="font-size: 12px; border-width: 0px">
+							<p:layout style="border-width:0px;">
+								<p:layoutUnit position="east" closable="false"
+									collapsible="false" style="font-size: 12px; border-width: 0px" size="350">
+									<h:form id="chartForm">
+										<p:barChart id="basic" value="#{chartController.categoryModel}"
+											legendPosition="ne" animate="true" style="font-size: 10px; font-color: white; font-weight: bold;"
+											title="Rating Distribution" min="0" max="50"
+											xaxisLabel="Ratings" yaxisLabel="Count"
+											orientation="horizontal">
+											<p:ajax event="itemSelect"
+												listener="#{chartController.itemSelect}"
+												update="graphMessage, chosenKeywords" />
+										</p:barChart>
+										<p:outputPanel deferred="true" style="width: 200px;">
+											<h3>Keywords chosen</h3>
+											<p>
+												<h:outputText id="chosenKeywords" 
+													value="#{chartController.chosenKeywords}" />
+											</p>
+										</p:outputPanel>
+										<p:growl id="graphMessage" showDetail="true" />
+									</h:form>										
+								</p:layoutUnit>
+								<p:layoutUnit position="center" closable="false"
+									collapsible="false" style="font-size: 12px; border-width: 0px" size="350">
+									<h:form id="keywordForm">
+										<p:commandButton value="Refresh Table" id="refresh"
+											process="@this" update="keywordTable"
+											actionListener="#{statusBean.poll}" />
+										<p:commandButton value="Start" id="start" process="@this"
+											onsuccess="poll.start()"
+											update="keywordTable,start,pause,resume,stop,poller"
+											actionListener="#{activityController.start}"
+											disabled="#{activityController.startState}" />
+										<p:commandButton value="Pause" id="pause" process="@this"
+											onsuccess="poll.stop()"
+											update="keywordTable,start,pause,resume,stop,poller"
+											actionListener="#{activityController.pause}"
+											disabled="#{activityController.pauseState}" />
+										<p:commandButton value="Resume" id="resume" process="@this"
+											onsuccess="poll.start()"
+											update="keywordTable,start,pause,resume,stop,poller"
+											actionListener="#{activityController.resume}"
+											disabled="#{activityController.resumeState}" />
+										<p:commandButton value="Stop" id="stop" process="@this"
+											onsuccess="poll.stop()"
+											update="keywordTable,start,pause,resume,stop,poller"
+											actionListener="#{activityController.stop}"
+											disabled="#{activityController.stopState}" />
+										<p:poll id="poller" interval="3" widgetVar="poll"
+											process="@this" autoStart="false"
+											stop="#{activityController.pollStop}"
+											listener="#{statusBean.poll}"
+											update="keywordTable,start,pause,resume,stop,:chartForm:basic" />
+										<p:separator id="separator" />
+										<p:dataTable id="keywordTable" var="model"
+											value="#{statusBean.models}" style="font-size: 10px;"
+											scrollable="true" scrollHeight="300" resizableColumns="true">
+											<p:column headerText="Keyword" sortBy="#{model.keyword}">
+												<h:outputText value="#{model.keyword}" />
+											</p:column>
+		
+											<p:column headerText="CPC($)" sortBy="#{model.cpc}">
+												<h:outputText value="#{model.cpc}" />
+											</p:column>
+		
+											<p:column headerText="Comp. Pages"
+												sortBy="#{model.totalNumberOfCompetitivePages}">
+												<h:outputText value="#{model.totalNumberOfCompetitivePages}" />
+											</p:column>
+		
+											<p:column headerText="Real Comp. Pages"
+												sortBy="#{model.realNumberOfCompetitivePages}">
+												<h:outputText value="#{model.realNumberOfCompetitivePages}" />
+											</p:column>
+		
+											<!-- <p:column headerText="Competition">
+												<h:outputText value="#{model.adwordCompetition}" />
+											</p:column> -->
+		
+											<p:column headerText="CP Strength"
+												sortBy="#{model.competitivePageStrength}">
+												<h:outputText value="#{model.competitivePageStrength}" />
+											</p:column>
+		
+											<p:column headerText="Avg. PR"
+												sortBy="#{model.averagePageRank}">
+												<h:outputText value="#{model.averagePageRank}" />
+											</p:column>
+		
+											<p:column headerText="PR Strength"
+												sortBy="#{model.pageRankStrentgh}">
+												<h:outputText value="#{model.pageRankStrentgh}" />
+											</p:column>
+		
+											<p:column headerText="Competition"
+												sortBy="#{model.competitionStrength}">
+												<h:outputText value="#{model.competitionStrength}" />
+											</p:column>
+		
+											<p:column headerText="Commercial Intent"
+												sortBy="#{model.commercialIntent}">
+												<h:outputText value="#{model.commercialIntent}" />
+											</p:column>
+		
+											<p:column headerText="Ads Count" sortBy="#{model.adsCount}">
+												<h:outputText value="#{model.adsCount}" />
+											</p:column>
+		
+											<p:column headerText="Keyword rating"
+												sortBy="#{model.keywordRating}">
+												<h:outputText value="#{model.keywordRating}" />
+											</p:column>
+										</p:dataTable>
+									</h:form>									
+								</p:layoutUnit>								
+							</p:layout>
 						</p:layoutUnit>
 					</p:layout>
 				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+		<p:layoutUnit position="south" losable="false" collapsible="false"
+					style="margin-top:50px;font-size: 12px;" size="400">
+			<p:layout style="border-width: 0px;">
+			
 			</p:layout>
 		</p:layoutUnit>
 	</p:layout>

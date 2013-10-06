@@ -1,10 +1,17 @@
 package org.google.api.ui.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,16 +22,17 @@ import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @ManagedBean(name="chartController")
 @SessionScoped
-public class ChartController implements ModelObserver {
+public class ChartController extends UIBaseControllerBean implements ModelObserver {
 	private CartesianChartModel categoryModel;
 	private ChartSeries ratingCategories;
 	private Strength[] strengths = new Strength[]{Strength.UNKNOWN, Strength.TERRIBLE, Strength.BAD, Strength.GOOD, Strength.GREAT, Strength.AMAZING};
 	private static final Log logger = LogFactory.getLog(ChartController.class);
-
+	private String chosenKeywords;
 	public ChartController() {
 		categoryModel = new CartesianChartModel();
 		ratingCategories = new ChartSeries();
@@ -58,8 +66,8 @@ public class ChartController implements ModelObserver {
 	}
 
 	public CartesianChartModel getCategoryModel() {
-		System.out.println(FacesContext.getCurrentInstance().getExternalContext().getClass());
-		System.out.println(((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getClass());
+		logger.info(FacesContext.getCurrentInstance().getExternalContext().getClass());
+		logger.info(((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getClass());
 		//System.out.println(((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getUserPrincipal().getClass());
 		return categoryModel;
 	}
@@ -76,12 +84,37 @@ public class ChartController implements ModelObserver {
 		reCreateChartModel();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void itemSelect(ItemSelectEvent event) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item selected", "Item Index: " + event.getItemIndex()
+		String message = new String("Item Index: " + event.getItemIndex()
 						+ ", Series Index:" + event.getSeriesIndex());
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		logger.info(message);
+		FacesMessage msg = null;
+		List<String> selectedKeywords = new ArrayList<String>();
+		ChartSeries series = categoryModel.getSeries().get(event.getSeriesIndex());
+		Map<Object, Number> seriesData = series.getData();
+		Iterator<Object> items = seriesData.keySet().iterator();
+		int counter=0;
+		String itemName = null;
+		while(counter<event.getItemIndex() && items.hasNext()){
+			itemName = items.next().toString();
+			counter++;
+		}
+		logger.info("Item Name to group: "+itemName);
+		logger.info("Going to find session");
+		HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		logger.info("Found Session "+session);
+		Collection<ModelObject> models = (Collection<ModelObject>)session.getAttribute(CURRENT_FILE_IN_PROCESS);
+		if(models!=null && !models.isEmpty()){
+			logger.info("Found models "+models.size());
+			for(ModelObject model : models){
+				if(model.getKeywordRating().toString().equalsIgnoreCase(itemName))
+					selectedKeywords.add(model.getKeyword());
+			}
+			chosenKeywords = StringUtils.collectionToCommaDelimitedString(selectedKeywords);
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", chosenKeywords);		
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
 	}
 
 	public boolean isRender() {
@@ -92,6 +125,10 @@ public class ChartController implements ModelObserver {
 	public boolean getRender() {
 		return ratingCategories.getData() != null ? ratingCategories.getData()
 				.isEmpty() : false;
+	}
+
+	public String getChosenKeywords() {
+		return chosenKeywords;
 	}
 
 }

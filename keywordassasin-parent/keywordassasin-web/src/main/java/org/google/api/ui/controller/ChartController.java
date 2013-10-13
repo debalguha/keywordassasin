@@ -96,7 +96,7 @@ public class ChartController extends UIBaseControllerBean implements ModelObserv
 		Iterator<Object> items = seriesData.keySet().iterator();
 		int counter=0;
 		String itemName = null;
-		while(counter<event.getItemIndex() && items.hasNext()){
+		while(counter<=event.getItemIndex() && items.hasNext()){
 			itemName = items.next().toString();
 			counter++;
 		}
@@ -112,6 +112,7 @@ public class ChartController extends UIBaseControllerBean implements ModelObserv
 					selectedKeywords.add(model.getKeyword());
 			}
 			chosenKeywords = StringUtils.collectionToCommaDelimitedString(selectedKeywords);
+			logger.info("Chosen keywords: "+chosenKeywords);
 			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", chosenKeywords);		
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}

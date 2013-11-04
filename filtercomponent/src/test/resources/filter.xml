@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<filters>
+	<filter default="true">
+		<filterName>Location</filterName>
+		<type>QUERY</type>
+		<query>SELECT HOUSENUM ID, ADDRESS NAME FROM LOCATION</query>
+		<searchField>LOCATION</searchField>
+	</filter>
+	<filter default="true">
+		<filterName>Type</filterName>
+		<type>OPTIONS</type>
+		<options>
+			<option id="1" name="Status A" />
+			<option id="2" name="Status B" />
+			<option id="3" name="Status C" />
+			<option id="4" name="Status D" />
+		</options>
+	</filter>
+	<filter default="true">
+		<filterName>MovDate</filterName>
+		<type>DATE</type>
+	</filter>
+</filters>
